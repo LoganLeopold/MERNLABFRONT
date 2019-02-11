@@ -7,9 +7,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route 
-
-        />
+        <Route path='/notes' render={(routerProps) => 
+          <Note {...routerProps}{...this.state} />}/>
       </div>
     );
   }
