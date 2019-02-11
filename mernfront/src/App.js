@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {Route} from 'react-router-dom'
+import Note from './Note'
 import './App.css';
 
 class App extends Component {
@@ -7,7 +8,7 @@ class App extends Component {
     return (
       <div>
         <Route 
-        
+
         />
       </div>
     );
