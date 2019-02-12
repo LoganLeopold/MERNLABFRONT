@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import Note from './Note'
+import NewNote from './NewNote'
 import './App.css';
 import axios from 'axios'
 
 
 class App extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       notes: [],
@@ -15,7 +16,7 @@ class App extends Component {
     this.delete = this.delete.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
   }
- 
+
   componentDidMount() {
 
     const url = 'http://localhost:8000/'
@@ -33,24 +34,45 @@ class App extends Component {
         console.error(err)
       })
 
-      console.log('component up')
-        
-    }
+    console.log('component up')
+
+  }
 
   delete(event) {
     event.preventDefault();
     console.log(event.target.name)
     axios.delete(`http://localhost:8000/notes/${event.target.name}/delete`)
-      .then(res => {
+      .then(() => {
         window.location = "/"
       })
+  }
+
+  new(event) {
+    event.preventDefault();
+    console.log(event.target.name)
+    axios({
+      method: 'post',
+      url: `/note/${this.state.name}/update`,
+      data: {
+        title: `${this.state.name}`,
+       content: `${this.state.content}`
+      }
+    });
   }
 
   render() {
     return (
       <div>
-        <Route path='/' render={(routerProps) => <Note delete={this.delete}{...routerProps}{...this.state} />}/>
+        <nav>
+          <ul>
+            <Link to='notes/create'><li>Create New Note</li></Link>
+          </ul>
+        </nav>
+        <div>
+          <Route path='/' exact render={(routerProps) => <Note delete={this.delete}{...routerProps}{...this.state} />} />
+          <Route path='/notes/create' exact render={(routerProps) => <NewNote new={this.new}{...routerProps}{...this.state} />} />
           {console.log('app rendered')}
+        </div>
       </div>
     );
   }
