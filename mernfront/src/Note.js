@@ -1,45 +1,30 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+// import axios from 'axios'
 
 class Note extends Component {
 
-    constructor () {
-        super()
-        this.state = {
-            notes: []
-        }
-    }
-    
-    
-    componentDidMount() {
+  render() {
 
-        const url = 'http://localhost:8000/notes'
-    
-        axios.get(url)
-          .then(response => {
-            let note = response.data
-            this.setState({
-              notes: note
-            });
-          })
-          .catch(err => {
-            console.error(err)
-          })
-          console.log('Flow workin fine')   
-      }
-    
-    render() {
+    const noteList = this.props.notes.map(note => {
+      console.log(note._id)
+      return (
+        <div>
+        <h1>{note.title}</h1>
+     <button type='submit' name={note._id} onClick={this.props.delete}>Delete this Note</button>
+        </div>
+        )
+    });
 
-        return (
-            <div>
-                <div class='Note'>
-                    Hello
-                    {/* <h1>{this.title}</h1>
-                    <p>{this.content}</p> */}
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div>
+        <div className='Note'>
+          <h1>sup</h1>
+          {noteList}
+
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Note;
